@@ -25,21 +25,9 @@ pipeline {
         stage('SCA - Trivy') {
             steps {
                 sh '''
-                    echo "Dependências presentes no checkout:"
-                    echo "SCA DIAGNOSTICO V2"
-                    cat requirements.txt
-
-                    docker run --rm \
-                    -v "$WORKSPACE:/src" \
-                    -w /src \
-                    aquasec/trivy:0.58.2 \
-                    fs --scanners vuln \
-                    --exit-code 0 \
-                    --format json \
-                    --list-all-pkgs \
-                    .
-
-                    echo "Análise Trivy terminada."
+                    docker run -v trivy-cache:/root/.cache/trivy \
+                    --rm -v "$WORKSPACE:/src" -w /src \
+                      aquasec/trivy:0.58.2 fs --scanners vuln --severity HIGH,CRITICAL --exit-code 1 .
                 '''
             }
         }
