@@ -88,7 +88,7 @@ pipeline {
                           -c /zap/rules.tsv -r zap.html -J zap.json
                     ''')
                     if (status < 0 || status > 2) {
-                        error("ZAP execution failed with exit code ${status}")
+                        error("ZAP execution failed with exit code ${status} ")
                     }
                     sh 'test -s reports/zap/zap.json'
                 }
