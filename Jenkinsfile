@@ -78,9 +78,9 @@ pipeline {
             steps {
                 sh 'mkdir -p reports/zap; rm -f reports/zap/*; chmod 777 reports/zap'
                 script {
-                    test -f "$WORKSPACE/ci/zap-rules.tsv" || exit 1
-
                     int status = sh(returnStatus: true, script: '''
+                        test -f "$WORKSPACE/ci/zap-rules.tsv" || exit 1
+
                         docker run --rm --network "$LAB_NETWORK" \
                           -v "$WORKSPACE/reports/zap:/zap/wrk:rw" \
                           ghcr.io/zaproxy/zaproxy:stable zap-baseline.py \
