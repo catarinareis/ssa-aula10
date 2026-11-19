@@ -83,6 +83,7 @@ pipeline {
 
                         docker run --rm --network "$LAB_NETWORK" \
                           -v "$WORKSPACE/reports/zap:/zap/wrk:rw" \
+                          -v "$WORKSPACE/ci/zap-rules.tsv:/zap/rules.tsv:ro" \
                           ghcr.io/zaproxy/zaproxy:stable zap-baseline.py \
                           -t "http://$APP_CONTAINER:8000" -m 1 \
                           -c /zap/rules.tsv -r zap.html -J zap.json
