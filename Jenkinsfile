@@ -112,6 +112,7 @@ pipeline {
                             docker build -t classroom-manual:latest .
                             docker rm -f classroom-manual 2>/dev/null || true
                             docker run -d --name classroom-manual \
+                              --restart unless-stopped \
                               -p 8000:8000 classroom-manual:latest
 
                             ready=0
