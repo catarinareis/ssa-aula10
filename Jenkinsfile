@@ -83,7 +83,7 @@ pipeline {
                           -v "$WORKSPACE/reports/zap:/zap/wrk:rw" \
                           ghcr.io/zaproxy/zaproxy:stable zap-baseline.py \
                           -t "http://$APP_CONTAINER:8000" -m 1 \
-                          -c /zap-rules.tsv -r zap.html -J zap.json
+                          -c /ci/zap-rules.tsv -r zap.html -J zap.json
                     ''')
                     if (status < 0 || status > 2) {
                         error("ZAP execution failed with exit code ${status}")
