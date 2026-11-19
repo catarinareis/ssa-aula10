@@ -5,6 +5,12 @@ from app.security import find_works
 
 app = FastAPI(title="DevSecOps classroom lab")
 
+@app.middleware("http")
+async def security_headers(request, call_next):
+    response = await call_next(request)
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    return response
 
 @app.get("/health")
 def health():
