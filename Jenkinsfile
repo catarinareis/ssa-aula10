@@ -27,7 +27,7 @@ pipeline {
                 sh '''
                     docker run -v trivy-cache:/root/.cache/trivy \
                     --rm -v "$WORKSPACE:/src" -w /src \
-                      aquasec/trivy:0.58.2 fs --scanners vuln --severity HIGH,CRITICAL --exit-code 1 .
+                      aquasec/trivy:0.58.2 fs --scanners vuln --severity MEDIUM,HIGH,CRITICAL --exit-code 1 .
                 '''
             }
         }
