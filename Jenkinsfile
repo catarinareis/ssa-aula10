@@ -78,12 +78,14 @@ pipeline {
             steps {
                 sh 'mkdir -p reports/zap; rm -f reports/zap/*; chmod 777 reports/zap'
                 script {
+                    test -f "$WORKSPACE/ci/zap-rules.tsv" || exit 1
+
                     int status = sh(returnStatus: true, script: '''
                         docker run --rm --network "$LAB_NETWORK" \
                           -v "$WORKSPACE/reports/zap:/zap/wrk:rw" \
                           ghcr.io/zaproxy/zaproxy:stable zap-baseline.py \
                           -t "http://$APP_CONTAINER:8000" -m 1 \
-                          -c "$WORKSPACE/ci/zap-rules.tsv" -r zap.html -J zap.json
+                          -c /zap/rules.tsv -r zap.html -J zap.json
                     ''')
                     if (status < 0 || status > 2) {
                         error("ZAP execution failed with exit code ${status}")
