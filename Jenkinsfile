@@ -34,5 +34,8 @@ pipeline {
                 '''
             }
         }
+        stage('Build application image') {
+            steps { sh 'docker build -t "$APP_IMAGE" .' }
+        }
     }
 }
