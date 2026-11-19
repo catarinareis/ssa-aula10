@@ -26,6 +26,7 @@ pipeline {
             steps {
                 sh '''
                     echo "Dependências presentes no checkout:"
+                    echo "SCA DIAGNOSTICO V2"
                     cat requirements.txt
 
                     docker run --rm \
