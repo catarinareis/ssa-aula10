@@ -1,6 +1,7 @@
 pipeline {
     agent { node { label ''; customWorkspace '/workspace/devsecops-lab' } }
     options { skipDefaultCheckout(true); disableConcurrentBuilds() }
+    environment { APP_IMAGE = "classroom-app:${BUILD_NUMBER}" }
     triggers {
         pollSCM('H/2 * * * *')
 
@@ -36,6 +37,11 @@ pipeline {
         }
         stage('Build application image') {
             steps { sh 'docker build -t "$APP_IMAGE" .' }
+        }
+    }
+    post {
+        always {
+            sh 'docker image rm "$APP_IMAGE" 2>/dev/null || true'
         }
     }
 }
