@@ -11,6 +11,8 @@ services:
     privileged: true
     environment:
       DOCKER_TLS_CERTDIR: /certs
+    ports:
+      - "127.0.0.1:8000:8000"
     volumes:
       - docker-certs:/certs/client
       - docker-data:/var/lib/docker
