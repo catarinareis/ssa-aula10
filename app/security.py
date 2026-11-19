@@ -1,11 +1,11 @@
 """Intentionally unsafe classroom examples. Replace these during remediation."""
 import hashlib
-import random
+import secrets
 import sqlite3
 
 
 def reset_token():
-    return str(random.randint(100000, 999999))
+    return secrets.token_urlsafe(32)
 
 
 def password_digest(password):
