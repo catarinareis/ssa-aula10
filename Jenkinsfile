@@ -92,6 +92,10 @@ pipeline {
                         error("ZAP execution failed with exit code ${status} ")
                     }
                     sh 'test -s reports/zap/zap.json'
+
+                    if (status == 1) {
+                        error('Política de segurança do ZAP reprovada. Consultar relatório.')
+                    }
                 }
             }
         }
